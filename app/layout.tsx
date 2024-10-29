@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 // import { useState } from "react";
 // import CookiePolicy from "@/components/CookiePolicy";
 import { ClerkProvider } from "@clerk/nextjs";
-import { CartProvider } from "@/context/CartContext";
+import { StoreProvider } from "@/context/StoreContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <CartProvider>
+      <StoreProvider>
         <html lang="en" className="h-full">
           <body
             className={cn(
@@ -45,21 +45,16 @@ export default function RootLayout({
               inter.className
             )}
           >
-            <main className="relative flex flex-col min-h-screen">
-              {/* <Providers> */}
-              <Navbar />
-              <div className="flex-grow flex-1">{children}</div>
+            <Navbar />
+            <main className="flex grainy-light flex-col min-h-[calc(100vh-3.5rem-1px)]">
+              <div className="flex-1 flex flex-col h-full">{children}</div>
               <Footer />
-              {/* </Providers> */}
             </main>
-            {/* <CookiePolicy
-          show={cookiePolicy}
-          // onClose={() => setCookiePolicy(false)}
-        /> */}
+
             <Toaster position="top-center" richColors />
           </body>
         </html>
-      </CartProvider>
+      </StoreProvider>
     </ClerkProvider>
   );
 }

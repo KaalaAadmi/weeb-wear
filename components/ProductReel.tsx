@@ -5,7 +5,7 @@ import ProductListing from "./ProductListing";
 import { ProductType } from "@/lib/types";
 
 interface ProductReelProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   href?: string;
   products: ProductType[];
@@ -13,7 +13,10 @@ interface ProductReelProps {
 
 const ProductReel = (props: ProductReelProps) => {
   const { title, subtitle, href } = props;
-
+  const c = title?.includes("Featured")
+    ? "w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8"
+    : "w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-3 md:gap-y-10 lg:gap-x-8";
+  console.log("ProductReel -> props.products", props.products);
   return (
     <section className="py-12">
       <div className="md:flex md:items-center md:justify-between mb-4">
@@ -40,14 +43,18 @@ const ProductReel = (props: ProductReelProps) => {
 
       <div className="relative">
         <div className="mt-6 flex items-center w-full">
-          <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
-            {props.products?.map((product, i) => (
-              <ProductListing
-                key={`product-${i}`}
-                product={product}
-                index={i}
-              />
-            ))}
+          <div className={c}>
+            {props.products.length !== 0 &&
+              props?.products?.map((product, i) => (
+                <ProductListing
+                  key={`product-${i}`}
+                  product={product}
+                  index={i}
+                />
+              ))}
+            {props.products.length === 0 && (
+              <p>No products found. Please check back later.</p>
+            )}
           </div>
         </div>
       </div>
