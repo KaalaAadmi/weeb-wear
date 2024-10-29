@@ -2,10 +2,10 @@
 
 import connect from "@/lib/db";
 import Product from "@/lib/models/Product";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+export const GET = async (req: NextRequest) => {
   //   const { category, excludeId } = req.query; // Get categories and the product to exclude from the query
   const url = new URL(req.url);
   const search_params = url.searchParams;

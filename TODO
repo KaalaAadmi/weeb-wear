@@ -4,12 +4,23 @@ NAVBAR:
 
 PRODUCTS PAGE:
 
-- Filter based on category and sort
+- [x] Filter based on category and sort
+  - [x] UI
+    - [x] Set Product_categories
+    - [x] UI DESIGN
+  - [x] API
+  - [x] Connection
 
 PRODUCT DETAIL PAGE:
 
 - [x] Add colors, highlights(description section)
+- [x] Add to cart button should refresh the cartitems on it's own and show on navbar.
 
 PROFILE PAGE:
 
-- create
+- [ ] create
+
+HOME PAGE:
+
+- [x] Add "make your own" button in hero
+- [ ] create make your own page (casecobra - youtube)

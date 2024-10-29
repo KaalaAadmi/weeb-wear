@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ItemCart } from "@/lib/types";
-import { useCart } from "@/context/CartContext"; // Import the cart context
+import { useStore } from "@/context/StoreContext"; // Import the cart context
 
 export const useFetchCartItems = (userId: string) => {
-  const [items, setItems] = useState<ItemCart[]>([]);
-  const { refresh } = useCart();
+  // const [items, setItems] = useState<ItemCart[]>([]);
+  const { cartItems, setCartItems, refresh } = useStore();
 
   const fetchCartItems = async () => {
     if (!userId) return;
@@ -14,7 +14,7 @@ export const useFetchCartItems = (userId: string) => {
       );
       if (response.ok) {
         const data = await response.json();
-        setItems(data.cartItems);
+        setCartItems(data.cartItems);
       } else {
         console.error("Failed to fetch cart items");
       }
@@ -27,5 +27,5 @@ export const useFetchCartItems = (userId: string) => {
     fetchCartItems();
   }, [userId, refresh]); // Add `refresh` as a dependency
 
-  return { items, fetchCartItems };
+  return { cartItems, fetchCartItems };
 };

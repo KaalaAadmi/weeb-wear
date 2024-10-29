@@ -18,16 +18,16 @@ import CartItem from "./CartItem";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useFetchCartItems } from "@/hooks/useFetchCartItems";
-import { useCart } from "@/context/CartContext";
+import { useStore } from "@/context/StoreContext";
 
 const Cart = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { user } = useUser();
-  const { items, fetchCartItems } = useFetchCartItems(user?.id || "");
-  const { setRefresh, refresh } = useCart(); // Access refresh from context
+  const { cartItems, fetchCartItems } = useFetchCartItems(user?.id || "");
+  const { setRefresh, refresh } = useStore(); // Access refresh from context
 
-  const itemCount = items ? items.length : 0;
-  const cartTotal = items?.reduce(
+  const itemCount = cartItems ? cartItems.length : 0;
+  const cartTotal = cartItems?.reduce(
     (total, item) => total + item?.productPrice,
     0
   );
@@ -59,7 +59,7 @@ const Cart = () => {
           <>
             <div className="flex w-full flex-col pr-6">
               <ScrollArea>
-                {items.map((item, idx) => (
+                {cartItems.map((item, idx) => (
                   <CartItem
                     product={item}
                     key={idx}

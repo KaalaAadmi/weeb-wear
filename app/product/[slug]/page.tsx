@@ -20,7 +20,7 @@ import ImageSlider from "@/components/ImageSlider";
 import { ShoppingCart } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { toast } from "sonner";
-import { useCart } from "@/context/CartContext";
+import { useStore } from "@/context/StoreContext";
 import { useFetchCartItems } from "@/hooks/useFetchCartItems";
 
 function classNames(...classes: string[]) {
@@ -30,14 +30,14 @@ type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL";
 type ss = { name: Size; instock: boolean };
 
 const ProductsPage = () => {
-  const { addToCart, setRefresh } = useCart();
+  const { addToCart, setRefresh } = useStore();
 
   const params = useParams<{ slug: string }>();
   const [product, setProduct] = useState<ProductType | null>(null);
   const allSizes: Size[] = ["XS", "S", "M", "L", "XL", "XXL"]; // Make sure this is typed correctly
   const { user } = useUser();
   const router = useRouter();
-  const { items, fetchCartItems } = useFetchCartItems(user?.id || "");
+  const { cartItems, fetchCartItems } = useFetchCartItems(user?.id || "");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -70,6 +70,13 @@ const ProductsPage = () => {
   }
   console.log(selectedSize);
   console.log(selectedColor);
+
+  const breadcrumbs = [
+    { id: 1, name: "Home", href: "/" },
+    { id: 2, name: "Products", href: "/products" },
+    // { id: 3, name: product?.name, href: "" },
+  ];
+  // }//["Home", "Products", product?.name];
 
   const [units, setUnits] = useState<string>("inches");
   const [filteredData, setFilteredData] = useState<SizeData[]>([]);
@@ -126,12 +133,12 @@ const ProductsPage = () => {
     <MaxWidthWrapper>
       <div className="bg-white">
         <div className="pt-6">
-          {/* <nav aria-label="Breadcrumb">
+          <nav aria-label="Breadcrumb">
             <ol
               role="list"
               className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
             >
-              {product.breadcrumbs.map((breadcrumb) => (
+              {breadcrumbs.map((breadcrumb, idx) => (
                 <li key={breadcrumb.id}>
                   <div className="flex items-center">
                     <a
@@ -140,6 +147,7 @@ const ProductsPage = () => {
                     >
                       {breadcrumb.name}
                     </a>
+
                     <svg
                       fill="currentColor"
                       width={16}
@@ -154,16 +162,16 @@ const ProductsPage = () => {
                 </li>
               ))}
               <li className="text-sm">
-                <a
-                  href={product.href}
+                <span
+                  // href={product.href}
                   aria-current="page"
                   className="font-medium text-gray-500 hover:text-gray-600"
                 >
-                  {product.name}
-                </a>
+                  {product?.name}
+                </span>
               </li>
             </ol>
-          </nav> */}
+          </nav>
 
           {/* Image Gallery */}
           <div className="hidden mx-auto mt-6 max-w-2xl lg:max-w-7xl lg:grid lg:grid-cols-3 lg:gap-x-8 lg:px-8">
