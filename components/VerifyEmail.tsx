@@ -25,14 +25,14 @@ import {
 import { toast } from "sonner";
 
 interface VerifyEmailProps {
-  token?: string;
+  // token?: string;
   // setCode: (code: string) => void;
 
   pendingVerification?: boolean;
   setPendingVerification: (pendingVerification: boolean) => void;
 }
 const VerifyEmail = ({
-  token,
+  // token,
   // setCode,
   pendingVerification,
   setPendingVerification,
