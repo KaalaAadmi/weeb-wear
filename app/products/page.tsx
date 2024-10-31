@@ -3,12 +3,12 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
 import {
   filters,
-  PRODUCT_CATEGORIES,
+  // PRODUCT_CATEGORIES,
   sortOptions,
   subCategories,
 } from "@/config";
-import { ProductType } from "@/lib/types";
-import { useEffect, useState } from "react";
+// import { ProductType } from "@/lib/types";
+import { useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -16,10 +16,10 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
+  // Menu,
+  // MenuButton,
+  // MenuItem,
+  // MenuItems,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -36,11 +36,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { set } from "mongoose";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const ProductsPage = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);

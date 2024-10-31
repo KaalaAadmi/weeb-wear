@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest, res: NextResponse) => {
+export const GET = async (req: NextRequest) => {
   const uri: string = req.url || "";
   const { pathname } = new URL(uri);
   const id: string | undefined = pathname.split("/").pop();

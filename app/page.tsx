@@ -1,5 +1,5 @@
 "use client";
-import CookiePolicy from "@/components/CookiePolicy";
+// import CookiePolicy from "@/components/CookiePolicy";
 import Hero from "@/components/Hero";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
@@ -48,7 +48,7 @@ export default function Home() {
         "We've pledged 1% of sales to the preservation and restoration of the natural environment.",
     },
   ];
-  const [cookiePolicy, setCookiePolicy] = useState<boolean>(false);
+  // const [cookiePolicy, setCookiePolicy] = useState<boolean>(false);
   const [featuredProducts, setFeaturedProducts] = useState<ProductType[]>([]);
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
