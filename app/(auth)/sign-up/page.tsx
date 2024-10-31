@@ -232,7 +232,7 @@ const Page = () => {
           <VerifyEmail
             // code={code}
             // setCode={setCode}
-            pendingVerification={pendingVerification}
+            // pendingVerification={pendingVerification}
             setPendingVerification={setPendingVerification}
           />
         )}
