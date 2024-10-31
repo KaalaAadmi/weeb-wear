@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
+import * as mongoose from "mongoose";
 
-// Ensure the environment variables are loaded
 if (!process.env.MONGODB_URI) {
   throw new Error(
     "Please define the MONGODB_URI environment variable inside .env.local"
@@ -8,25 +7,27 @@ if (!process.env.MONGODB_URI) {
 }
 
 const connect = async () => {
-  //   console.log(process.env.MONGODB_URI);
-  const connectionState = mongoose.connection.readyState;
-  if (connectionState === 1) {
-    console.log("Already Connected");
-    return;
-  }
-  if (connectionState === 2) {
-    console.log("Connecting...");
-    return;
-  }
   try {
-    mongoose.connect(process.env.MONGODB_URI!, {
+    // Prevents unnecessary reconnections if already connected
+    if (mongoose.connection?.readyState === 1) {
+      console.log("Already Connected to MongoDB");
+      return;
+    }
+
+    if (mongoose.connection?.readyState === 2) {
+      console.log("Connection to MongoDB in Progress...");
+      return;
+    }
+
+    // Attempt to connect to MongoDB with options
+    await mongoose.connect(process.env.MONGODB_URI!, {
       dbName: "weebwear",
-      bufferCommands: true,
+      bufferCommands: false,
     });
-    console.log("Connected");
-  } catch (error: any) {
-    console.error("Error connecting to database: ", error);
-    throw new Error("Error connecting to database: ", error);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    throw error; // Propagate error to calling function
   }
 };
 

@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <StoreProvider>
-        <html lang="en" className="h-full">
+        <html lang="en" className="h-full antialiased">
           <body
             className={cn(
               "relative h-full font-sans antialiased",

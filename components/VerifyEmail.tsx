@@ -1,3 +1,4 @@
+"use client";
 import { Loader2, XCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,13 +25,14 @@ import {
 import { toast } from "sonner";
 
 interface VerifyEmailProps {
-  // code: string;
+  token?: string;
   // setCode: (code: string) => void;
-  pendingVerification: boolean;
+
+  pendingVerification?: boolean;
   setPendingVerification: (pendingVerification: boolean) => void;
 }
 const VerifyEmail = ({
-  // code,
+  token,
   // setCode,
   pendingVerification,
   setPendingVerification,
@@ -58,7 +60,9 @@ const VerifyEmail = ({
         setError("Verification code is incorrect");
       }
       if (completeSignUp?.status === "complete") {
-        setActive({ session: completeSignUp?.createdSessionId });
+        if (setActive) {
+          setActive({ session: completeSignUp?.createdSessionId });
+        }
         setPendingVerification(false);
         router?.push("/?verified=true");
       }
