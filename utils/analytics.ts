@@ -1,11 +1,7 @@
-import { Pool } from "pg";
-import { getDate } from "@/utils";
+import connect from "@/lib/db"; // MongoDB connection
+import { getDate } from "@/utils"; // Date formatting
 import { parse } from "date-fns";
-
-// Create a new pool instance for PostgreSQL connection
-const pool = new Pool({
-  connectionString: process.env.POSTGRESQL_URI,
-});
+import EventModel from "@/lib/models/Event"; // Using the defined Event model
 
 type AnalyticsArgs = {
   retention?: number;
@@ -16,7 +12,7 @@ type TrackOptions = {
 };
 
 export class Analytics {
-  private retention: number = 60 * 60 * 24 * 7;
+  private retention: number = 60 * 60 * 24 * 7; // 7 days in seconds
 
   constructor(opts?: AnalyticsArgs) {
     if (opts?.retention) this.retention = opts.retention;
@@ -24,30 +20,31 @@ export class Analytics {
 
   async track(
     namespace: string,
-    event: Record<string, any> = {},
+    event: Record<string, number> = {},
     opts?: TrackOptions
   ) {
-    const date = getDate();
-    const key = opts?.persist
-      ? `analytics::${namespace}`
-      : `analytics::${namespace}::${date}`;
+    await connect();
 
-    // PostgreSQL query to increment the view count for a specific event and date
-    await pool.query(
-      `
-      INSERT INTO analytics (namespace, date, event_data, view_count) 
-      VALUES ($1, $2, $3, 1) 
-      ON CONFLICT (namespace, date, event_data) 
-      DO UPDATE SET view_count = analytics.view_count + 1
-      `,
-      [key, date, JSON.stringify(event)]
+    const keyDate = getDate();
+    const key = opts?.persist ? namespace : `${namespace}::${keyDate}`;
+
+    const eventData = await EventModel.findOneAndUpdate(
+      { namespace: key, date: keyDate },
+      { $inc: event },
+      { upsert: true, new: true }
     );
 
-    // Optionally add expiry handling based on the retention period if needed
+    if (!opts?.persist) {
+      const expireAt = new Date(Date.now() + this.retention * 1000);
+      await eventData.updateOne({ $set: { expireAt } });
+    }
   }
 
   async retrieveDays(namespace: string, nDays: number) {
-    const promises: ReturnType<typeof this.retrieve>[] = [];
+    const promises: Promise<{
+      date: string;
+      events: Record<string, number>;
+    }>[] = [];
 
     for (let i = 0; i < nDays; i++) {
       const formattedDate = getDate(i);
@@ -56,35 +53,28 @@ export class Analytics {
 
     const fetched = await Promise.all(promises);
 
-    // Sort results by date
-    const data = fetched.sort((a, b) => {
-      if (
-        parse(a.date, "dd/MM/yyyy", new Date()) >
-        parse(b.date, "dd/MM/yyyy", new Date())
-      ) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
-
-    return data;
+    return fetched.sort((a, b) =>
+      parse(a.date, "dd/MM/yyyy", new Date()) >
+      parse(b.date, "dd/MM/yyyy", new Date())
+        ? 1
+        : -1
+    );
   }
 
   async retrieve(namespace: string, date: string) {
-    const res = await pool.query(
-      `
-      SELECT event_data, view_count FROM analytics 
-      WHERE namespace = $1 AND date = $2
-      `,
-      [`analytics::${namespace}::${date}`, date]
-    );
+    await connect();
+
+    const result = await EventModel.findOne({
+      namespace: `${namespace}::${date}`,
+      date,
+    });
 
     return {
       date,
-      events: res.rows.map((row) => ({
-        [row.event_data]: Number(row.view_count),
-      })),
+      events: Object.entries(result?.events ?? {}).reduce(
+        (acc, [key, value]) => ({ ...acc, [key]: Number(value) }),
+        {}
+      ),
     };
   }
 }
