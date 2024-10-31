@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 // import CookiePolicy from "@/components/CookiePolicy";
 import { ClerkProvider } from "@clerk/nextjs";
 import { StoreProvider } from "@/context/StoreContext";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
 
             <Toaster position="top-center" richColors />
           </body>
+          <GoogleAnalytics gaId="G-R5GNET16RC" />
         </html>
       </StoreProvider>
     </ClerkProvider>
