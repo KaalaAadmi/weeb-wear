@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
     const name = formData.get("name");
     const description = formData.get("description");
     const price = formData.get("price");
-    const images = formData.getAll("image"); // Get uploaded files
+    const images = formData.getAll("image") as File[]; // Get uploaded files and cast to File[]
     const category = formData.get("category");
     const sizes = formData.getAll("size");
     const featured = formData.get("featured");
@@ -27,7 +27,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     // Upload images to Cloudinaryf
-    const uploadedImageUrls = await uploadImagesToCloudinary(images);
+    const uploadedImageUrls = await uploadImagesToCloudinary(images as File[]);
 
     // Save product to MongoDB
     await connect();
