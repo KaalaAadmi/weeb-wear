@@ -33,6 +33,7 @@ export interface ItemCart {
   productId: string;
   productName?: string;
   productImage?: string;
+  productCategory?: string;
   productSize: "XS" | "S" | "M" | "L" | "XL" | "XXL";
   productColor: string;
   productQuantity: number;

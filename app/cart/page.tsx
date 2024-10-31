@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { PRODUCT_CATEGORIES } from "@/config";
+import { ItemCart } from "@/lib/types";
 // import { useCart } from "@/hooks/use-cart";
 import { cn, formatPrice } from "@/lib/utils";
 // import { trpc } from "@/trpc/client";
@@ -35,7 +36,7 @@ const Page = () => {
   //     0
   //   );
   const cartTotal = 0;
-  const items = [];
+  const items: ItemCart[] = [];
   const fee = 1;
 
   return (
@@ -81,21 +82,21 @@ const Page = () => {
               })}
             >
               {isMounted &&
-                items.map(({ product }) => {
+                items.map((product, idx) => {
                   const label = PRODUCT_CATEGORIES.find(
-                    (c) => c.value === product.category
+                    (c) => c.value === product.productCategory
                   )?.label;
 
-                  const { image } = product.images[0];
+                  const image = product.productImage;
 
                   return (
-                    <li key={product.id} className="flex py-6 sm:py-10">
+                    <li key={idx} className="flex py-6 sm:py-10">
                       <div className="flex-shrink-0">
                         <div className="relative h-24 w-24">
-                          {typeof image !== "string" && image.url ? (
+                          {typeof image !== "string" && image ? (
                             <Image
                               fill
-                              src={image.url}
+                              src={image}
                               alt="product image"
                               className="h-full w-full rounded-md object-cover object-center sm:h-48 sm:w-48"
                             />
@@ -109,10 +110,10 @@ const Page = () => {
                             <div className="flex justify-between">
                               <h3 className="text-sm">
                                 <Link
-                                  href={`/product/${product.id}`}
+                                  href={`/product/${product._id}`}
                                   className="font-medium text-gray-700 hover:text-gray-800"
                                 >
-                                  {product.name}
+                                  {product.productName}
                                 </Link>
                               </h3>
                             </div>
@@ -124,7 +125,7 @@ const Page = () => {
                             </div>
 
                             <p className="mt-1 text-sm font-medium text-gray-900">
-                              {formatPrice(product.price)}
+                              {formatPrice(product.productPrice)}
                             </p>
                           </div>
 
@@ -132,7 +133,7 @@ const Page = () => {
                             <div className="absolute right-0 top-0">
                               <Button
                                 aria-label="remove product"
-                                onClick={() => removeItem(product.id)}
+                                // onClick={() => removeItem(product._id)}
                                 variant="ghost"
                               >
                                 <X className="h-5 w-5" aria-hidden="true" />
@@ -197,14 +198,14 @@ const Page = () => {
 
             <div className="mt-6">
               <Button
-                disabled={items.length === 0 || isLoading}
-                onClick={() => createCheckoutSession({ productIds })}
+                disabled={items.length === 0}
+                // onClick={() => createCheckoutSession({ productIds })}
                 className="w-full"
                 size="lg"
               >
-                {isLoading ? (
+                {/* {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
-                ) : null}
+                ) : null} */}
                 Checkout
               </Button>
             </div>

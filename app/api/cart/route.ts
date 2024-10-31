@@ -32,6 +32,7 @@ export const POST = async (req: NextRequest) => {
       userId,
       productId,
       productName,
+      productCategory,
       productSize,
       productImage,
       productColor,
@@ -44,6 +45,7 @@ export const POST = async (req: NextRequest) => {
       productId,
       productSize,
       productColor,
+      productCategory,
     });
     if (cartItem) {
       // Update the quantity of the existing item
@@ -59,6 +61,7 @@ export const POST = async (req: NextRequest) => {
       productId,
       productName,
       productSize,
+      productCategory,
       productImage,
       productColor,
       productQuantity,
