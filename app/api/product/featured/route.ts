@@ -1,9 +1,9 @@
 import connect from "@/lib/db";
 import Product from "@/lib/models/Product";
-import { NextApiRequest, NextApiResponse } from "next";
+// import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
-
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+import { type NextRequest } from "next/server";
+export const GET = async (req: NextRequest) => {
   try {
     await connect();
 
