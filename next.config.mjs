@@ -8,6 +8,9 @@ const nextConfig = {
       "img.clerk.com",
     ],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;

@@ -15,20 +15,19 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   }
 
   // Track analytics on the homepage
-  if (req.nextUrl.pathname === "/") {
-    try {
-      // await analytics.track("pageview", {
-      //   page: "/",
-      //   country: req.geo?.country || "",
-      // });
-      // await analytics.track("homePageView", {
-      //   country: req.geo?.country || "Unknown",
-      // });
-    } catch (err) {
-      // Fail silently to avoid impacting request
-      console.error(err);
-    }
-  }
+  // if (
+  //   req.nextUrl.pathname === "/") {
+  //   try {
+  //     // await analytics.track("pageview", {
+  //     //   page: "/",
+  //     //   country: req.geo?.country || "",
+  //     // });
+  //     // await analytics.track("homePageView", {
+  //     //   country: req.geo?.country || "Unknown",
+  //     // });
+  //   }
+
+  // }
 
   // Allow other requests to proceed
   return NextResponse.next();
