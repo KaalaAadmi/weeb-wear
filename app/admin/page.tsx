@@ -16,7 +16,7 @@ const Admin = async () => {
     return (
       acc +
       Object.values(curr.events).reduce((acc, curr) => {
-        return acc + curr;
+        return acc + (typeof curr === "number" ? curr : 0);
       }, 0)
     );
   }, 0);
@@ -27,7 +27,11 @@ const Admin = async () => {
     .filter((ev) => ev.date === getDate())
     .reduce((acc, curr) => {
       return (
-        acc + Object.values(curr.events).reduce((acc, curr) => acc + curr, 0)
+        acc +
+        Object.values(curr.events).reduce(
+          (acc, curr) => acc + (typeof curr === "number" ? curr : 0),
+          0
+        )
       );
     }, 0);
 
