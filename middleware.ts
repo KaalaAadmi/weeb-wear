@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import { analytics } from "./utils/analytics";
+// import { analytics } from "./utils/analytics";x
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
