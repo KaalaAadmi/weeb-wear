@@ -1,7 +1,7 @@
 "use client";
-import { Loader2, XCircle } from "lucide-react";
+// import { Loader2, XCircle } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 import { Button } from "./ui/button";
 import { useSignUp } from "@clerk/nextjs";
 import { useState } from "react";
@@ -19,22 +19,22 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  // FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
 interface VerifyEmailProps {
   // token?: string;
   // setCode: (code: string) => void;
 
-  pendingVerification?: boolean;
+  // pendingVerification?: boolean;
   setPendingVerification: (pendingVerification: boolean) => void;
 }
 const VerifyEmail = ({
   // token,
-  // setCode,
-  pendingVerification,
+  // // setCode,
+  // pendingVerification,
   setPendingVerification,
 }: VerifyEmailProps) => {
   const form = useForm({
@@ -120,7 +120,7 @@ const VerifyEmail = ({
               </FormItem>
             )}
           />
-
+          {error && <p className="text-red-500">{error}</p>}
           <Button className="w-full" type="submit" variant="primary">
             Submit
           </Button>

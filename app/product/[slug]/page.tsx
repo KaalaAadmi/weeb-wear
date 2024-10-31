@@ -3,14 +3,14 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { ProductType, SizeData } from "@/lib/types";
 import { useParams, useRouter } from "next/navigation";
 import { MouseEvent, useEffect, useState } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
+// import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { formatPrice } from "@/lib/utils";
 import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
+  // ModalFooter,
   ModalTrigger,
 } from "@/components/ui/animated-modal";
 import { TableDemo } from "@/components/DataTable";
@@ -27,7 +27,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL";
-type ss = { name: Size; instock: boolean };
+// type ss = { name: Size; instock: boolean };
 
 const ProductsPage = () => {
   const { addToCart, setRefresh } = useStore();
@@ -37,7 +37,7 @@ const ProductsPage = () => {
   const allSizes: Size[] = ["XS", "S", "M", "L", "XL", "XXL"]; // Make sure this is typed correctly
   const { user } = useUser();
   const router = useRouter();
-  const { cartItems, fetchCartItems } = useFetchCartItems(user?.id || "");
+  const { fetchCartItems } = useFetchCartItems(user?.id || "");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -139,7 +139,7 @@ const ProductsPage = () => {
               className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
             >
               {breadcrumbs.map((breadcrumb, idx) => (
-                <li key={breadcrumb.id}>
+                <li key={idx}>
                   <div className="flex items-center">
                     <a
                       href={breadcrumb.href}

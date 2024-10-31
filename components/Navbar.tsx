@@ -8,12 +8,12 @@ import Cart from "./Cart";
 import UserAccountNav from "./UserAccountNav";
 import MobileNav from "./MobileNav";
 import { useUser } from "@clerk/clerk-react";
-import { useState } from "react";
+// import { useState } from "react";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { user, isLoaded } = useUser();
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">

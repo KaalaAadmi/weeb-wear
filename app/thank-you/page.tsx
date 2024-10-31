@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { cookies } from "next/headers";
 // import { getPayloadClient } from '@/get-payload'
-import { notFound, redirect } from "next/navigation";
+// import { notFound, redirect } from "next/navigation";
 // import { Product, ProductFile, User } from '@/payload-types'
 import { PRODUCT_CATEGORIES } from "@/config";
 import { formatPrice } from "@/lib/utils";
@@ -16,8 +16,8 @@ interface PageProps {
 }
 
 const ThankYouPage = async ({ searchParams }: PageProps) => {
-  const orderId = searchParams.orderId;
-  const nextCookies = cookies();
+  // const orderId = searchParams.orderId;
+  // const nextCookies = cookies();
 
   //   const { user } = await getServerSideUser(nextCookies)
   //   const payload = await getPayloadClient()

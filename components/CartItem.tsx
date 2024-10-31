@@ -1,4 +1,4 @@
-import { PRODUCT_CATEGORIES } from "@/config";
+// import { PRODUCT_CATEGORIES } from "@/config";
 import { ItemCart } from "@/lib/types";
 // import { useCart } from '@/hooks/use-cart'
 import { formatPrice } from "@/lib/utils";
@@ -15,7 +15,7 @@ const CartItem = ({
   onRemoveItem: () => void;
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  let productImage = product?.productImage;
+  const productImage = product?.productImage;
 
   const handleRemoveItem = async (id: string) => {
     try {

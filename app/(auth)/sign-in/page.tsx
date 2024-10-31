@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useSignIn } from "@clerk/nextjs";
@@ -17,7 +17,7 @@ import { useSignIn } from "@clerk/nextjs";
 const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isLoaded, signIn, setActive } = useSignIn();
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  // const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
 

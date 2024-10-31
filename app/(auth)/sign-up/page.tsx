@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useState } from "react";
@@ -17,16 +17,16 @@ import VerifyEmail from "@/components/VerifyEmail";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const [pendingVerification, setPendingVerification] =
     useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
-  const [code, setCode] = useState<string>("");
+  // const [showPassword, setShowPassword] = useState<boolean>(false);
+  // const [showConfirmPassword, setShowConfirmPassword] =
+  //   useState<boolean>(false);
+  // const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const {
     register,
