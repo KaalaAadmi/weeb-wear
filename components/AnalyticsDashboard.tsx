@@ -109,7 +109,10 @@ const AnalyticsDashboard = ({
             data={timeseriesPageviews.map((day) => ({
               name: day.date,
               Visitors: Object.values(day.events).reduce((acc, count) => {
-                return acc + count;
+                return (
+                  acc +
+                  Object.values(count).reduce((sum, value) => sum + value, 0)
+                );
               }, 0),
             }))}
             categories={["Visitors"]}
