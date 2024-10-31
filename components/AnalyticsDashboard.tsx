@@ -1,5 +1,5 @@
 // import AnalyticsDashboard from "@/components/AnalyticsDashboard";
-import { analytics } from "@/utils/analytics";
+// import { analytics } from "@/utils/analytics";
 import { BarChart, Card } from "@tremor/react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight } from "lucide-react";
 import ReactCountryFlag from "react-country-flag";
@@ -7,7 +7,7 @@ import ReactCountryFlag from "react-country-flag";
 interface AnalyticsDashboardProps {
   avgVisitorsPerDay: string;
   amtVisitorsToday: number;
-  timeseriesPageviews: Awaited<ReturnType<typeof analytics.retrieveDays>>;
+  // timeseriesPageviews: Awaited<ReturnType<typeof analytics.retrieveDays>>;
   topCountries: [string, number][];
 }
 
@@ -43,7 +43,7 @@ const Badge = ({ percentage }: { percentage: number }) => {
 const AnalyticsDashboard = ({
   avgVisitorsPerDay,
   amtVisitorsToday,
-  timeseriesPageviews,
+  // timeseriesPageviews,
   topCountries,
 }: AnalyticsDashboardProps) => {
   return (
@@ -102,7 +102,7 @@ const AnalyticsDashboard = ({
       </Card>
 
       <Card>
-        {timeseriesPageviews ? (
+        {/* {timeseriesPageviews ? (
           <BarChart
             allowDecimals={false}
             showAnimation
@@ -118,7 +118,7 @@ const AnalyticsDashboard = ({
             categories={["Visitors"]}
             index="name"
           />
-        ) : null}
+        ) : null} */}
       </Card>
     </div>
   );
