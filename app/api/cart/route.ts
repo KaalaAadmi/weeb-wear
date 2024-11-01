@@ -86,6 +86,7 @@ export const POST = async (req: NextRequest) => {
 export const DELETE = async (req: NextRequest) => {
   try {
     const { userId, itemId } = await req.json();
+    console.log(userId, itemId);
     // const userId = request.userId;
     await connect();
     const item = await Cart.findOne({ _id: itemId, userId });
