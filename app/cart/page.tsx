@@ -1,42 +1,64 @@
 "use client";
-
+// http://localhost:3000/product/67193da50a8ea2007031ca27
+// http://localhost:3000/product/6724bac1106a4f678fe2c6dd
 import { Button } from "@/components/ui/button";
 import { PRODUCT_CATEGORIES } from "@/config";
-import { ItemCart } from "@/lib/types";
+import { useStore } from "@/context/StoreContext";
+import { useFetchCartItems } from "@/hooks/useFetchCartItems";
+// import { ItemCart } from "@/lib/types";
 // import { useCart } from "@/hooks/use-cart";
 import { cn, formatPrice } from "@/lib/utils";
+import { useUser } from "@clerk/clerk-react";
 // import { trpc } from "@/trpc/client";
 import { Check, Loader2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 // import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Page = () => {
-  //   const { items, removeItem } = useCart();
-
-  // const router = useRouter();
-
-  //   const { mutate: createCheckoutSession, isLoading } =
-  //     trpc.payment.createSession.useMutation({
-  //       onSuccess: ({ url }) => {
-  //         if (url) router.push(url);
-  //       },
-  //     });
-
-  //   const productIds = items.map(({ product }) => product.id);
-
+  const { user } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { cartItems, fetchCartItems } = useFetchCartItems(user?.id || "");
+  const { setRefresh, refresh } = useStore(); // Access refresh from context
+
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    if (user) {
+      fetchCartItems();
+    }
+  }, [user, refresh]); // Add `refresh` to trigger re-fetch
+  const handleRemoveItem = async (id: string, userId: string) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cart`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ itemId: id, userId: userId }),
+      });
 
+      const data = await response.json();
+      if (response.ok) {
+        toast.success("Item removed from cart");
+        fetchCartItems(); // Trigger the cart re-fetch
+        setRefresh((prev) => !prev); // Triggers re-fetch in `cart.tsx`
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error("Failed to remove item:", error);
+      toast.error("Failed to remove item from cart");
+    }
+  };
   //   const cartTotal = items.reduce(
   //     (total, { product }) => total + product.price,
   //     0
   //   );
-  const cartTotal = 0;
-  const items: ItemCart[] = [];
+  const cartTotal = cartItems?.reduce(
+    (total, item) => total + item?.productPrice,
+    0
+  );
+  // const items: ItemCart[] = [];
   const fee = 1;
 
   return (
@@ -50,19 +72,19 @@ const Page = () => {
           <div
             className={cn("lg:col-span-7", {
               "rounded-lg border-2 border-dashed border-zinc-200 p-12":
-                isMounted && items.length === 0,
+                isMounted && cartItems.length === 0,
             })}
           >
             <h2 className="sr-only">Items in your shopping cart</h2>
 
-            {isMounted && items.length === 0 ? (
+            {isMounted && cartItems.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center space-y-1">
                 <div
                   aria-hidden="true"
                   className="relative mb-4 h-40 w-40 text-muted-foreground"
                 >
                   <Image
-                    src="/hippo-empty-cart.png"
+                    src="/assets/images/hippo-empty-cart.png"
                     fill
                     loading="eager"
                     alt="empty shopping cart hippo"
@@ -78,22 +100,22 @@ const Page = () => {
             <ul
               className={cn({
                 "divide-y divide-gray-200 border-b border-t border-gray-200":
-                  isMounted && items.length > 0,
+                  isMounted && cartItems.length > 0,
               })}
             >
               {isMounted &&
-                items.map((product, idx) => {
+                cartItems.map((product, idx) => {
                   const label = PRODUCT_CATEGORIES.find(
                     (c) => c.value === product.productCategory
                   )?.label;
 
-                  const image = product.productImage;
-
+                  const image = product.productImage || "";
+                  // console.log(product);
                   return (
                     <li key={idx} className="flex py-6 sm:py-10">
                       <div className="flex-shrink-0">
                         <div className="relative h-24 w-24">
-                          {typeof image !== "string" && image ? (
+                          {typeof image === "string" && image ? (
                             <Image
                               fill
                               src={image}
@@ -110,7 +132,7 @@ const Page = () => {
                             <div className="flex justify-between">
                               <h3 className="text-sm">
                                 <Link
-                                  href={`/product/${product._id}`}
+                                  href={`/product/${product.productId}`}
                                   className="font-medium text-gray-700 hover:text-gray-800"
                                 >
                                   {product.productName}
@@ -133,7 +155,12 @@ const Page = () => {
                             <div className="absolute right-0 top-0">
                               <Button
                                 aria-label="remove product"
-                                // onClick={() => removeItem(product._id)}
+                                onClick={() =>
+                                  handleRemoveItem(
+                                    product.productId,
+                                    product.userId
+                                  )
+                                }
                                 variant="ghost"
                               >
                                 <X className="h-5 w-5" aria-hidden="true" />
@@ -198,7 +225,7 @@ const Page = () => {
 
             <div className="mt-6">
               <Button
-                disabled={items.length === 0}
+                disabled={cartItems.length === 0}
                 // onClick={() => createCheckoutSession({ productIds })}
                 className="w-full"
                 size="lg"
