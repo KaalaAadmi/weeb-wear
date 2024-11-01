@@ -22,7 +22,7 @@ const Page = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { cartItems, fetchCartItems } = useFetchCartItems(user?.id || "");
   const { setRefresh, refresh } = useStore(); // Access refresh from context
-
+  console.log("LOGGED IN USER ID:", user?.id);
   useEffect(() => {
     setIsMounted(true);
     if (user) {
@@ -30,6 +30,7 @@ const Page = () => {
     }
   }, [user, refresh]); // Add `refresh` to trigger re-fetch
   const handleRemoveItem = async (id: string, userId: string) => {
+    console.log(id, userId);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cart`, {
         method: "DELETE",
@@ -50,15 +51,12 @@ const Page = () => {
       toast.error("Failed to remove item from cart");
     }
   };
-  //   const cartTotal = items.reduce(
-  //     (total, { product }) => total + product.price,
-  //     0
-  //   );
+
   const cartTotal = cartItems?.reduce(
     (total, item) => total + item?.productPrice,
     0
   );
-  // const items: ItemCart[] = [];
+
   const fee = 1;
 
   return (
@@ -111,6 +109,7 @@ const Page = () => {
 
                   const image = product.productImage || "";
                   // console.log(product);
+                  console.log("PRODUCT USER ID:", product.userId);
                   return (
                     <li key={idx} className="flex py-6 sm:py-10">
                       <div className="flex-shrink-0">
@@ -157,8 +156,8 @@ const Page = () => {
                                 aria-label="remove product"
                                 onClick={() =>
                                   handleRemoveItem(
-                                    product.productId,
-                                    product.userId
+                                    product?._id || "",
+                                    product.userId || ""
                                   )
                                 }
                                 variant="ghost"
