@@ -1,7 +1,7 @@
 "use client";
 // import CookiePolicy from "@/components/CookiePolicy";
 import Hero from "@/components/Hero";
-import LogoCloud from "@/components/LogoCloud";
+// import LogoCloud from "@/components/LogoCloud";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
 import { ProductType } from "@/lib/types";
@@ -66,7 +66,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <LogoCloud />
+      {/* <LogoCloud /> */}
       {/* Featured Products */}
       <MaxWidthWrapper>
         <ProductReel title={"Featured Products"} products={featuredProducts} />
