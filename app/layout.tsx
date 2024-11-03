@@ -51,9 +51,9 @@ export default function RootLayout({
               <div className="flex-1 flex flex-col h-full">{children}</div>
               <Footer />
             </main>
-            <GoogleTagManager gtmId="GTM-PMNBH7QM" />
             <Toaster position="top-center" richColors />
           </body>
+          <GoogleTagManager gtmId="GTM-PMNBH7QM" />
           <GoogleAnalytics gaId="G-R5GNET16RC" />
         </html>
       </StoreProvider>
