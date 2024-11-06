@@ -1,6 +1,6 @@
 import React from "react";
 
-const page = () => {
+const PrivacyPolicy = () => {
   return (
     <section>
       <div className="bg-gray-100">
@@ -151,4 +151,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PrivacyPolicy;

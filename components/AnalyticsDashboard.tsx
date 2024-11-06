@@ -1,14 +1,32 @@
-// import AnalyticsDashboard from "@/components/AnalyticsDashboard";
-// import { analytics } from "@/utils/analytics";
-import { BarChart, Card } from "@tremor/react";
+// import { BarChart, Card } from "@tremor/react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight } from "lucide-react";
 import ReactCountryFlag from "react-country-flag";
+import dynamic from "next/dynamic";
+import { DeviceCharts } from "./DeviceCharts";
+import { BarCharts } from "./BarCharts";
+import { BrowserCharts } from "./BrowserCharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { AppSidebar } from "./Sidebar";
+
+const MapWithTooltip = dynamic(() => import("../components/MapWithTooltip"), {
+  ssr: false,
+});
 
 interface AnalyticsDashboardProps {
-  avgVisitorsPerDay: string;
-  amtVisitorsToday: number;
-  // timeseriesPageviews: Awaited<ReturnType<typeof analytics.retrieveDays>>;
+  avgVisitorsPerDay: number | undefined;
+  totalUsersPerDay: Record<string, number> | undefined;
   topCountries: [string, number][];
+  totalUsers: number | undefined;
+  mapData: Record<string, number>;
+  devices: Record<string, number>;
+  browserData: Record<string, number>;
 }
 
 const Badge = ({ percentage }: { percentage: number }) => {
@@ -18,9 +36,9 @@ const Badge = ({ percentage }: { percentage: number }) => {
 
   if (isNaN(percentage)) return null;
 
-  const positiveClassname = "bg-green-900/25 text-green-400 ring-green-400/25";
-  const neutralClassname = "bg-zinc-900/25 text-zinc-400 ring-zinc-400/25";
-  const negativeClassname = "bg-red-900/25 text-red-400 ring-red-400/25";
+  const positiveClassname = "bg-green-100 text-green-600 ring-green-600/25";
+  const neutralClassname = "bg-gray-100 text-gray-600 ring-gray-600/25";
+  const negativeClassname = "bg-red-100 text-red-600 ring-red-600/25";
 
   return (
     <span
@@ -42,85 +60,83 @@ const Badge = ({ percentage }: { percentage: number }) => {
 
 const AnalyticsDashboard = ({
   avgVisitorsPerDay,
-  amtVisitorsToday,
-  // timeseriesPageviews,
+  totalUsersPerDay,
   topCountries,
+  totalUsers,
+  mapData,
+  devices,
+  browserData,
 }: AnalyticsDashboardProps) => {
+  const barChartData = totalUsersPerDay
+    ? Object.entries(totalUsersPerDay).map(([date, visitors]) => ({
+        date,
+        visitors,
+      }))
+    : [];
+
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid w-full mx-auto grid-cols-1 sm:grid-cols-2 gap-6">
-        <Card className="w-full">
-          <p className="text-tremor-default text-tremor-content">
-            Avg. visitors/day
-          </p>
-          <p className="text-3xl text-tremor-content-strong font-semibold">
-            {avgVisitorsPerDay}
-          </p>
-        </Card>
-        <Card className="w-full">
-          <p className="flex gap-2.5 items-center text-tremor-default text-tremor-content">
-            Visitors today
-            <Badge
-              percentage={
-                (amtVisitorsToday / Number(avgVisitorsPerDay) - 1) * 100
-              }
-            />
-          </p>
-          <p className="text-3xl text-tremor-content-strong font-semibold">
-            {amtVisitorsToday}
-          </p>
-        </Card>
-      </div>
-
-      <Card className="flex flex-col sm:grid grid-cols-4 gap-6">
-        <h2 className="w-full text-tremor-content-strong text-center sm:left-left font-semibold text-xl">
-          This weeks top visitors:
-        </h2>
-        <div className="col-span-3 flex items-center justify-between flex-wrap gap-8">
-          {topCountries?.map(([countryCode, number]) => {
-            return (
-              <div
-                key={countryCode}
-                className="flex items-center gap-3 text-dark-tremor-content-strong"
-              >
-                <p className="hidden sm:block text-tremor-content">
-                  {countryCode}
-                </p>
-                <ReactCountryFlag
-                  className="text-5xl sm:text-3xl"
-                  svg
-                  countryCode={countryCode}
-                />
-
-                <p className="text-tremor-content sm:text-tremor-content-strong">
-                  {number}
-                </p>
-              </div>
-            );
-          })}
+    <>
+      {/* <AppSidebar /> */}
+      <div className="flex flex-col gap-6 p-2">
+        <div className="grid w-full mx-auto grid-cols-1 sm:grid-cols-2 gap-3">
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle>Total Users</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl text-black font-semibold">{totalUsers}</p>
+            </CardContent>
+            <CardFooter>
+              <Badge percentage={0} />
+            </CardFooter>
+          </Card>
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle>Avg. visitors/day</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl text-black font-semibold">
+                {avgVisitorsPerDay}
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Badge percentage={0} />
+            </CardFooter>
+          </Card>
         </div>
-      </Card>
-
-      <Card>
-        {/* {timeseriesPageviews ? (
-          <BarChart
-            allowDecimals={false}
-            showAnimation
-            data={timeseriesPageviews.map((day) => ({
-              name: day.date,
-              Visitors: Object.values(day.events).reduce((acc, count) => {
-                return (
-                  acc +
-                  Object.values(count).reduce((sum, value) => sum + value, 0)
-                );
-              }, 0),
-            }))}
-            categories={["Visitors"]}
-            index="name"
-          />
-        ) : null} */}
-      </Card>
-    </div>
+        <Card className="flex flex-col sm:grid grid-cols-4 gap-6">
+          <CardHeader>
+            <h2 className="w-full text-black text-center font-semibold text-xl">
+              This week's top visitors:
+            </h2>
+          </CardHeader>
+          <CardContent className="flex flex-row">
+            <div className="col-span-3 flex items-center justify-between flex-row gap-8">
+              {topCountries?.map(([countryCode, number]) => (
+                <div
+                  key={countryCode}
+                  className="flex items-center gap-3 text-black"
+                >
+                  <p className="hidden sm:block text-gray-600">{countryCode}</p>
+                  <ReactCountryFlag
+                    className="text-5xl sm:text-3xl"
+                    svg
+                    countryCode={countryCode}
+                  />
+                  <p className="text-black">{number}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+        <MapWithTooltip mapData={mapData} />
+        <div className="lg:flex lg:flex-row sm:flex-col gap-2">
+          <DeviceCharts deviceData={devices} />
+          <BrowserCharts browserData={browserData} />
+        </div>
+        <BarCharts data={barChartData} index="date" />
+      </div>
+    </>
   );
 };
 

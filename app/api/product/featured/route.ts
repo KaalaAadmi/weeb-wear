@@ -3,6 +3,7 @@ import Product from "@/lib/models/Product";
 // import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 // import { type NextRequest } from "next/server";
+
 export const GET = async () => {
   try {
     await connect();
