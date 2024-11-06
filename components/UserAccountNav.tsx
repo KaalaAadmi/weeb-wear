@@ -72,7 +72,7 @@ const UserAccountNav = ({ user, isLoaded }: { user: any; isLoaded: any }) => {
           </DropdownMenuItem>
           {isAdmin && (
             <DropdownMenuItem>
-              <Link className="flex " href="/admin">
+              <Link className="flex " href="/admin/dashboard">
                 <Shield className="mr-2 h-4 w-4" />
                 <span>Admin Panel</span>
               </Link>

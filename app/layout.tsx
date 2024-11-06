@@ -12,6 +12,8 @@ import { Toaster } from "sonner";
 import { ClerkProvider } from "@clerk/nextjs";
 import { StoreProvider } from "@/context/StoreContext";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+// import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+// import { AppSidebar } from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // <SidebarProvider>
     <ClerkProvider>
       <StoreProvider>
         <html lang="en" className="h-full antialiased">
@@ -47,7 +50,9 @@ export default function RootLayout({
             )}
           >
             <Navbar />
+            {/* <AppSidebar /> */}
             <main className="flex grainy-light flex-col min-h-[calc(100vh-3.5rem-1px)]">
+              {/* <SidebarTrigger /> */}
               <div className="flex-1 flex flex-col h-full">{children}</div>
               <Footer />
             </main>
@@ -58,5 +63,6 @@ export default function RootLayout({
         </html>
       </StoreProvider>
     </ClerkProvider>
+    // </SidebarProvider>
   );
 }
