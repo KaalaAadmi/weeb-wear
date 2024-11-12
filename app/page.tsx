@@ -1,6 +1,7 @@
 "use client";
 // import CookiePolicy from "@/components/CookiePolicy";
 import Hero from "@/components/Hero";
+import Hero1 from "@/components/Hero1";
 // import LogoCloud from "@/components/LogoCloud";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
@@ -65,14 +66,15 @@ export default function Home() {
   }, []);
   return (
     <>
-      <Hero />
+      {/* <Hero /> */}
+      <Hero1 />
       {/* <LogoCloud /> */}
       {/* Featured Products */}
       <MaxWidthWrapper>
         <ProductReel title={"Featured Products"} products={featuredProducts} />
       </MaxWidthWrapper>
       {/* Perks */}
-      <section className="border-t border-gray-200 bg-gray-50">
+      <section className="border-t border-gray-200 bg-gray-50 flex-1">
         <MaxWidthWrapper className="py-20">
           <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0">
             {perks.map((perk) => (

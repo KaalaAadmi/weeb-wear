@@ -33,6 +33,9 @@ const start = new Date(
   today.setUTCDate(today.getUTCDate() - 7)
 ).toLocaleDateString("en-US", options);
 
+const end = new Date(
+  today.setUTCDate(today.getUTCDate() - 1)
+).toLocaleDateString("en-US", options);
 export function DeviceCharts({
   deviceData,
 }: {

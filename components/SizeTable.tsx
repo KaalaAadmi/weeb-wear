@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { SizeData } from "@/lib/types";
 
-export function TableDemo({ data }: { data: SizeData[] }) {
+export function SizeTable({ data }: { data: SizeData[] }) {
   return (
     <Table>
       <TableHeader>

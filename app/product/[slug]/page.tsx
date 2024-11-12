@@ -13,7 +13,7 @@ import {
   // ModalFooter,
   ModalTrigger,
 } from "@/components/ui/animated-modal";
-import { TableDemo } from "@/components/DataTable";
+import { SizeTable } from "@/components/SizeTable";
 import { data } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import ImageSlider from "@/components/ImageSlider";
@@ -354,7 +354,7 @@ const ProductsPage = () => {
                             </Button>
                           </div>
                           <div className="flex flex-col justify-center items-center">
-                            <TableDemo data={filteredData} />
+                            <SizeTable data={filteredData} />
                           </div>
                         </ModalContent>
                       </ModalBody>

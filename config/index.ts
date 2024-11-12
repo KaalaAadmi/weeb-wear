@@ -210,3 +210,28 @@ export const filters = [
     ],
   },
 ];
+
+export const colors = [
+  { name: "White", value: "#fffefa" },
+  { name: "Black", value: "#0a0a0a" },
+  { name: "Blue", value: "#01408c" },
+  { name: "Brown", value: "brown" },
+  { name: "Green", value: "#5d9447" },
+  { name: "Purple", value: "#536aa6" },
+  { name: "Navy", value: "#1a2230" },
+  { name: "Red", value: "#cf081c" },
+  { name: "Teal", value: "#447085" },
+  { name: "Maroon", value: "#8a0c1f" },
+];
+
+export const sizes = [
+  { name: "XS", value: "XS" },
+  { name: "S", value: "S" },
+  { name: "M", value: "M" },
+  { name: "L", value: "L" },
+  { name: "XL", value: "XL" },
+  { name: "XXL", value: "XXL" },
+  { name: '5"X7"', value: '5"X7"' },
+  { name: "A2", value: "A2" },
+  { name: "A1", value: "A1" },
+];

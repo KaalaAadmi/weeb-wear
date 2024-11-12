@@ -44,8 +44,8 @@ const uploadImagesToCloudinary = async (files: File[]) => {
           .end(Buffer.from(buffer));
       });
       uploadedImages.push({
-        key: uploadResponse?.public_id,
-        url: uploadResponse?.secure_url,
+        key: uploadResponse?.public_id || "",
+        url: uploadResponse?.secure_url || "",
       });
     } else {
       throw new Error("Invalid file type");

@@ -1,10 +1,10 @@
 import { Schema, model, models, Types } from "mongoose";
 const productSchema = new Schema(
   {
-    _id: {
-      type: Types.ObjectId,
-      required: true,
-    },
+    // _id: {
+    //   type: Types.ObjectId,
+    //   required: false,
+    // },
     name: {
       type: String,
       required: true,
@@ -16,7 +16,7 @@ const productSchema = new Schema(
     },
     descriptionPara2: {
       type: String,
-      required: true,
+      required: false,
     },
     descriptionPara3: {
       type: String,
@@ -49,7 +49,7 @@ const productSchema = new Schema(
     colors: {
       type: Map,
       of: String, // Value is a hex code (string)
-      required: true,
+      required: false,
     },
     highlights: {
       type: [String],
@@ -57,7 +57,7 @@ const productSchema = new Schema(
     },
     sizes: {
       type: [String],
-      enum: ["XS", "S", "M", "L", "XL", "XXL"],
+      enum: ["XS", "S", "M", "L", "XL", "XXL", '5"X7"', "A2", "A1"],
       required: true,
     },
   },

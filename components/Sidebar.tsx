@@ -4,6 +4,8 @@ import {
   Inbox,
   Search,
   Settings,
+  Package,
+  PackagePlus,
 } from "lucide-react";
 
 import {
@@ -25,14 +27,14 @@ const items = [
     icon: LayoutDashboard,
   },
   {
-    title: "Inbox",
-    url: "/login",
-    icon: Inbox,
+    title: "Products",
+    url: "/admin/products",
+    icon: Package,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Add Product",
+    url: "/admin/add-product",
+    icon: PackagePlus,
   },
   {
     title: "Search",
@@ -51,7 +53,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>Admin Pannel</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

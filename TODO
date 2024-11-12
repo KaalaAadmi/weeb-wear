@@ -28,5 +28,9 @@ HOME PAGE:
 
 ADMIN:
 
-- [ ] Admin Pannel
-- [ ] Analytics Dashboard
+- [x] Admin Pannel
+- [x] Analytics Dashboard
+- [x] Add Product API
+- [x] Add Product API CALL
+- [ ] Add Category in edit product page
+- [ ] Add category in product table

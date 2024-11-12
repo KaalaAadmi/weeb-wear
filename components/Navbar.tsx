@@ -14,9 +14,9 @@ import { usePathname, useRouter } from "next/navigation";
 const Navbar = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  console.log(pathname.includes("/admin"));
+  // console.log(pathname.includes("/admin"));
   const showHeader = pathname.includes("/admin") ? false : true;
-  console.log(showHeader);
+  // console.log(showHeader);
   const { user, isLoaded } = useUser();
 
   if (showHeader) {

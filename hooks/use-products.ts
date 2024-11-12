@@ -4,14 +4,10 @@ import axios from "axios";
 import { ProductType } from "@/lib/types";
 
 export function useFetchProducts(
-  category: string,
-  filters: any,
-  sortOption: string
+  category?: string,
+  filters?: any,
+  sortOption?: string
 ) {
-  console.log("useFetchProducts -> category", category);
-  console.log("useFetchProducts -> filters", filters);
-  console.log("useFetchProducts -> sortOption", sortOption);
-
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
