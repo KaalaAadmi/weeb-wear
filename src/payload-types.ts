@@ -213,6 +213,7 @@ export interface Order {
   receipt_url: string;
   checkout_session_id: string;
   transaction_id: string;
+  payment_intent_id: string;
   type: string;
   updatedAt: string;
   createdAt: string;
@@ -425,6 +426,7 @@ export interface OrdersSelect<T extends boolean = true> {
   receipt_url?: T;
   checkout_session_id?: T;
   transaction_id?: T;
+  payment_intent_id?: T;
   type?: T;
   updatedAt?: T;
   createdAt?: T;

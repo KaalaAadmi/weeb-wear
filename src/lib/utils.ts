@@ -61,7 +61,7 @@ export const registerOrderDetails = async ({
 }) => {
   const date = new Date().toLocaleDateString();
   try {
-    const response = await fetch("/api/orders", {
+    const response = await fetch("/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const registerOrderDetails = async ({
         email: data?.object?.billing_details?.email,
         currency: data?.object?.currency,
         amount: data?.object?.amount,
-        address: JSON.parse(data?.object?.billing_details?.address),
+        address: JSON.stringify(data?.object?.billing_details?.address),
         date: date,
         receipt_url: data?.object?.receipt_url,
         checkout_session_id: data?.object?.id,
