@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   const res = JSON.parse(payload);
 
-  const sig = req.headers.get("Stripe-Signature");
+  const sig = req.headers.get("stripe-signature");
 
   const dateTime = new Date(res.created * 1000).toLocaleDateString();
   const timeString = new Date(res.created * 1000).toLocaleDateString();
