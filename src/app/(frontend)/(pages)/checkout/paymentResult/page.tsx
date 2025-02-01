@@ -44,7 +44,7 @@ const page = async ({
         </div>
         <h1 className="text-2xl font-semibold">Payment Successful!</h1>
         <p className="text-lg max-w-lg text-center">
-          Hello {session?.customer_details?.email}, your payment was successful.
+          Hello {session?.customer_details?.name}, your payment was successful.
           <br />
           Your order is being processed. <br />
           Receipt of your purchase will be sent to your email:{" "}

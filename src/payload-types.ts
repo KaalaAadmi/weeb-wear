@@ -17,6 +17,7 @@ export interface Config {
     reviews: Review;
     newsletter: Newsletter;
     carts: Cart;
+    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -29,6 +30,7 @@ export interface Config {
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     carts: CartsSelect<false> | CartsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -190,6 +192,33 @@ export interface Cart {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  name: string;
+  email: string;
+  currency: string;
+  amount: number;
+  address:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  date: string;
+  receipt_url: string;
+  checkout_session_id: string;
+  transaction_id: string;
+  type: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -218,6 +247,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'carts';
         value: string | Cart;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -375,6 +408,24 @@ export interface CartsSelect<T extends boolean = true> {
   category?: T;
   size?: T;
   image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  currency?: T;
+  amount?: T;
+  address?: T;
+  date?: T;
+  receipt_url?: T;
+  checkout_session_id?: T;
+  transaction_id?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }

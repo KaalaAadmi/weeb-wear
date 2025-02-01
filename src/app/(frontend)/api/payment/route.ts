@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
         },
         quantity: item.quantity,
       })),
+      customer_email: data.email,
       payment_method_types: ["card"],
       mode: "payment",
       return_url: `${req.headers.get("referer")}/paymentResult?session_id={CHECKOUT_SESSION_ID}`,

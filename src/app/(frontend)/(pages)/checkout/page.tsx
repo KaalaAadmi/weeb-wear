@@ -6,6 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useCallback } from "react";
 import { useCart } from "@/context/cart-context";
+import { useAuth } from "@/context/auth-context";
 const Page = () => {
   const {
     cartItems,
@@ -13,6 +14,7 @@ const Page = () => {
     // removeFromCart
     emptyCart,
   } = useCart();
+  const { user } = useAuth();
   console.log("Cart Items in CHECKOUT: ", JSON.stringify(cartItems));
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -26,6 +28,7 @@ const Page = () => {
         },
         body: JSON.stringify({
           cartItems: cartItems,
+          email: user?.email,
         }),
       });
       const data = await response.json();

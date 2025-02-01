@@ -13,12 +13,13 @@ import { Product } from "./collections/Product";
 import { Reviews } from "./collections/Review";
 import { Newsletter } from "./collections/Newsletter";
 import { Cart } from "./collections/Cart";
+import { Order } from "./collections/Order";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
-  collections: [Users, Media, Product, Reviews, Newsletter, Cart],
+  collections: [Users, Media, Product, Reviews, Newsletter, Cart, Order],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
