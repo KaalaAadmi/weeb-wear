@@ -16,16 +16,22 @@ GENERAL:
 - [x] On submit of email do api call
 - [x] Make footer responsive
 - [x] Add fabric and care and highlights in product description in an accordian
+
+- [x] stripe
+
+- [x] media should not be stored in a folder in the app as it will hamper performance.
+
 - [ ] Add Toasts
 
   - [x] subscribe to newsletter
   - [ ] login
   - [ ] logout
   - [ ] register
-  - [ ] add product to cart
+  - [x] add product to cart
 
-- [x] stripe
 - [ ] orders
 - [ ] account profile page
+- [ ] group by fandom?????
+- [ ] stripe webhook from [here](https://www.youtube.com/watch?v=2JDKquIMJws&pp=ygUVc3RyaXBlIHdlYmhvb2sgbmV4dGpz)
 
-- [x] media should not be stored in a folder in the app as it will hamper performance.
+- [ ] custom stripe checkout page with stripe elements

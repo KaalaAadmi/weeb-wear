@@ -12,6 +12,10 @@ import LoadingDots from "../loading-dots";
 import { useCart } from "@/context/cart-context";
 // import { Media, Product } from '../../payload-types'
 import { useAuth } from "@/context/auth-context";
+import { toast } from "sonner";
+// import { useState } from "react";
+// import { set } from "react-hook-form";
+// import { toast } from "sonner";
 type ProductVariant = {
   productId: string;
   userId: string;
@@ -28,20 +32,30 @@ function SubmitButton({
   product,
   availableForSale,
   selectedVariantId,
+  disabled,
 }: {
   product: ProductVariant;
   availableForSale?: boolean;
   selectedVariantId?: string | undefined;
+  disabled?: boolean;
 }) {
   console.log(availableForSale, selectedVariantId);
+  console.log("DISABLED:", disabled);
   const { pending } = useFormStatus();
   const buttonClasses =
-    "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
+    "relative cursor-pointer flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
   const { addToCart } = useCart();
   const { user } = useAuth();
   const handleAddToCart = (product: ProductVariant) => {
     event?.preventDefault();
+    if (product.color === "") {
+      toast.error("Please select a color ");
+      return;
+    } else if (product.size === "") {
+      toast.error("Please select a size ");
+      return;
+    }
     if (!user) {
       redirect("/sign-in");
     } else {
@@ -72,7 +86,8 @@ function SubmitButton({
     <button
       onClick={() => handleAddToCart(product)}
       aria-label="Add to cart"
-      aria-disabled={pending}
+      // disabled={disabled}
+      // aria-disabled={disabled}
       className={clsx(buttonClasses, {
         "hover:opacity-90": true,
         [disabledClasses]: pending,

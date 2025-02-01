@@ -206,7 +206,7 @@ const Page = () => {
                   <p className="text-sm text-red-500">{error as string}</p>
                 )}
                 <Button
-                  // variant={"primary"}
+                  variant={"primary"}
                   disabled={isLoading}
                   className="mt-4"
                 >

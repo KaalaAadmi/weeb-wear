@@ -5,6 +5,8 @@ import { fetchDoc } from "@/app/(frontend)/(api)/fetchDoc";
 // import { User as UserIcon } from 'lucide-react'
 import { Cart, User } from "../payload-types";
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "sonner";
+import { useAuth } from "./auth-context";
 // import { set } from 'react-hook-form'
 
 type CartItem = {
@@ -41,15 +43,17 @@ export const CartProvider = ({
   children: React.ReactNode;
 }) => {
   const [cartItems, setCartItems] = useState<Cart[]>([]);
-  let user = undefined;
-  try {
-    user = JSON.parse(localStorage.getItem("user") || "{}");
-  } catch (error) {
-    console.log(error);
-  }
+  // let user = undefined;
+  const { user } = useAuth();
+  // try {
+  //   user = JSON.parse(localStorage.getItem("user") || "{}");
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   const fetchCartItems = async () => {
-    if (user === JSON.parse("{}")) setCartItems([]);
+    if (user === null) setCartItems([]);
+    else if (user === JSON.parse("{}")) setCartItems([]);
     try {
       if (user?.id) {
         // Fetch cart items for the logged-in user from the database
@@ -108,6 +112,7 @@ export const CartProvider = ({
         });
         if (!response.ok) throw new Error("Failed to add cart item");
         fetchCartItems();
+        toast.success(`${item.name} added to cart`);
       } else {
         //@ts-expect-error - TS2339: Property 'setCartItems' does not exist on type 'CartProvider'.
         setCartItems((prev) => {
@@ -149,6 +154,7 @@ export const CartProvider = ({
               cartItem.size !== item.size
           )
         );
+        toast.success(`${item.name} removed from cart`);
       }
     } catch (err) {
       console.error("Error in removeFromCart:", err);

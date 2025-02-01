@@ -153,7 +153,7 @@ export default function CartModal() {
                                 </div>
                                 <Link
                                   //   href={merchandiseUrl}
-                                  href={"#"}
+                                  href={`/product/${item?.productId?.id}`}
                                   onClick={closeCart}
                                   className="z-30 ml-2 flex flex-row space-x-4"
                                 >
@@ -168,6 +168,11 @@ export default function CartModal() {
                                         {item.name}
                                       </p>
                                     ) : null}
+                                    <div className="l-0 flex flex-row w-1/2 justify-start items-center">
+                                      <span>{item.color}</span>
+                                      <span className="px-2">•</span>
+                                      <span>{item.size}</span>
+                                    </div>
                                   </div>
                                 </Link>
                               </div>

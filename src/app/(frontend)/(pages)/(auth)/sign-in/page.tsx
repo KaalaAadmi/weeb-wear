@@ -148,7 +148,7 @@ const Page = () => {
                 {error && <p className="text-sm text-red-500">{error}</p>}
 
                 {/* Submit Button */}
-                <Button disabled={isLoading}>
+                <Button variant={"primary"} disabled={isLoading}>
                   {isLoading && (
                     <ArrowPathIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
