@@ -61,7 +61,7 @@ export const registerOrderDetails = async ({
 }) => {
   const date = new Date().toLocaleDateString();
   try {
-    const response = await fetch("/order", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
