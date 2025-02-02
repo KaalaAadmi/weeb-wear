@@ -53,13 +53,19 @@ export const validateEnvironmentVariables = () => {
 
 export const registerOrderDetails = async ({
   data,
+  // event,
   // date,
   // time,
 }: {
   data: any;
+  // event: any;
   // date: new Date().toLocaleDateString(),  // time: string;
 }) => {
   const date = new Date().toLocaleDateString();
+  console.log("EVENT IN CALLING API:", data.event);
+  console.log("DATA:", JSON.stringify(data));
+  console.log("DATA OBJECT:", data);
+  console.log("EXAMPLE:", data.object.object + "" + data.object.status);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/order`,
@@ -81,7 +87,7 @@ export const registerOrderDetails = async ({
             data?.object?.payment_method_details?.card?.three_d_secure
               ?.transaction_id,
           payment_intent_id: data?.object?.payment_intent,
-          orderType: data?.type,
+          orderType: data.object.object + "." + data.object.status,
         }),
       }
     );

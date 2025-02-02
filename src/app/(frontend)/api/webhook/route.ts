@@ -17,8 +17,12 @@ export async function POST(req: NextRequest) {
       sig!,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
+    const data = {
+      ...res,
+      event: event.type,
+    };
     // Make function to add details in database
-    const response = await registerOrderDetails(res);
+    const response = await registerOrderDetails(data);
     // console.log(
     //   res?.data?.object?.billing_details?.email,
     //   res?.data?.object?.amount,
