@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
         checkout_session_id: body?.checkout_session_id,
         transaction_id: body?.transaction_id,
         payment_intent_id: body?.payment_intent_id as string,
-        type: body?.type,
+        orderType: body?.orderType,
       },
     });
     return new NextResponse(JSON.stringify(res), { status: 200 });

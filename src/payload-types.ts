@@ -214,7 +214,7 @@ export interface Order {
   checkout_session_id: string;
   transaction_id: string;
   payment_intent_id: string;
-  type: string;
+  orderType: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -427,7 +427,7 @@ export interface OrdersSelect<T extends boolean = true> {
   checkout_session_id?: T;
   transaction_id?: T;
   payment_intent_id?: T;
-  type?: T;
+  orderType?: T;
   updatedAt?: T;
   createdAt?: T;
 }

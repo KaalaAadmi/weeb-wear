@@ -61,27 +61,30 @@ export const registerOrderDetails = async ({
 }) => {
   const date = new Date().toLocaleDateString();
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/order`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data?.object?.billing_details?.name,
-        email: data?.object?.billing_details?.email,
-        currency: data?.object?.currency,
-        amount: data?.object?.amount,
-        address: JSON.stringify(data?.object?.billing_details?.address),
-        date: date,
-        receipt_url: data?.object?.receipt_url,
-        checkout_session_id: data?.object?.id,
-        transaction_id:
-          data?.object?.payment_method_details?.card?.three_d_secure
-            ?.transaction_id,
-        payment_intent_id: data?.object?.payment_intent,
-        type: data?.type,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/order`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data?.object?.billing_details?.name,
+          email: data?.object?.billing_details?.email,
+          currency: data?.object?.currency,
+          amount: data?.object?.amount,
+          address: JSON.stringify(data?.object?.billing_details?.address),
+          date: date,
+          receipt_url: data?.object?.receipt_url,
+          checkout_session_id: data?.object?.id,
+          transaction_id:
+            data?.object?.payment_method_details?.card?.three_d_secure
+              ?.transaction_id,
+          payment_intent_id: data?.object?.payment_intent,
+          orderType: data?.type,
+        }),
+      }
+    );
     return response;
   } catch (error) {
     console.log(error);

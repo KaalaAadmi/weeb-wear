@@ -73,8 +73,8 @@ export const Order: CollectionConfig = {
       required: true,
     },
     {
-      name: "type",
-      label: "Type",
+      name: "orderType",
+      label: "Order Type",
       type: "text",
       required: true,
     },
