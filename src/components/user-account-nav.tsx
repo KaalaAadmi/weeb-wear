@@ -80,7 +80,7 @@ const UserAccountNav = ({ user }: { user: User }) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link className="flex" href="/profile">
+            <Link className="flex" href="/account">
               <UserIcon className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </Link>

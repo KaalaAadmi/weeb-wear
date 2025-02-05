@@ -29,9 +29,9 @@ GENERAL:
   - [ ] register
   - [x] add product to cart
 
-- [ ] orders
-- [ ] account profile page
+- [x] stripe webhook from [here](https://www.youtube.com/watch?v=2JDKquIMJws&pp=ygUVc3RyaXBlIHdlYmhvb2sgbmV4dGpz)
+- [x] orders
+- [x] account profile page
 - [ ] group by fandom?????
-- [ ] stripe webhook from [here](https://www.youtube.com/watch?v=2JDKquIMJws&pp=ygUVc3RyaXBlIHdlYmhvb2sgbmV4dGpz)
 
 - [ ] custom stripe checkout page with stripe elements

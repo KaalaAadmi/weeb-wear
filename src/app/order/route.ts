@@ -1,6 +1,7 @@
 import { getPayloadHMR } from "@payloadcms/next/utilities";
 import configPromise from "@payload-config";
 import { NextRequest, NextResponse } from "next/server";
+import { headersWithCors } from "payload";
 
 export const POST = async (req: NextRequest) => {
   const payload = await getPayloadHMR({
@@ -30,5 +31,45 @@ export const POST = async (req: NextRequest) => {
     return new NextResponse(JSON.stringify({ error: "Error adding order" }), {
       status: 500,
     });
+  }
+};
+
+export const GET = async (req: NextRequest) => {
+  const searchParams = req.nextUrl.searchParams;
+  const email = searchParams.get("email");
+  let orderType = searchParams.get("orderType");
+  if (!orderType) {
+    orderType = "charge.succeeded";
+  }
+  const payload = await getPayloadHMR({
+    config: configPromise,
+  });
+  try {
+    const res = await payload.find({
+      collection: "orders",
+      limit: 10,
+      sort: "-createdAt",
+      // direction: 'desc',
+      where: {
+        and: [
+          { email: { equals: email } },
+          { orderType: { equals: orderType } },
+        ],
+      },
+    });
+    const response = new NextResponse(JSON.stringify(res.docs), {
+      status: 200,
+    });
+    response.headers.set("Content-Type", "application/json");
+    Object.entries(headersWithCors).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    return new NextResponse(
+      JSON.stringify({ error: `Error fetching orders: ${error}` }),
+      { status: 500 }
+    );
   }
 };
