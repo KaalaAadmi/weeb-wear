@@ -16,6 +16,7 @@ export default function MobileMenu({ menu }: { menu: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const openMobileMenu = () => setIsOpen(true);
   const closeMobileMenu = () => setIsOpen(false);
+  const currentParams = new URLSearchParams(searchParams?.toString() || "");
 
   useEffect(() => {
     const handleResize = () => {
@@ -78,21 +79,35 @@ export default function MobileMenu({ menu }: { menu: any[] }) {
                   </Suspense>
                 </div>
                 {menu.length ? (
-                  <ul className="flex w-full flex-col">
-                    {menu.map((item: any) => (
-                      <li
-                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                        key={item.title}
-                      >
-                        <Link
-                          href={item.path}
-                          prefetch={true}
-                          onClick={closeMobileMenu}
-                        >
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
+                  <ul className="hidden gap-6 text-sm md:flex md:items-center">
+                    {menu.map((item) => {
+                      // Update query params for each menu item
+                      const updatedParams = new URLSearchParams(
+                        currentParams.toString()
+                      );
+                      if (item?.category) {
+                        updatedParams.set("category", item.category);
+                      } else {
+                        updatedParams.delete("category"); // Remove the category for "All"
+                      }
+
+                      const path = `/search?${updatedParams.toString()}`;
+
+                      return (
+                        <li key={item.title}>
+                          {/* <Suspense fallback={null}> */}
+                          <Link
+                            href={path}
+                            prefetch={true}
+                            className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
+                            onClick={closeMobileMenu}
+                          >
+                            {item.title}
+                          </Link>
+                          {/* </Suspense> */}
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : null}
               </div>
